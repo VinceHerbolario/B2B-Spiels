@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Spiels Playbook — Regenesys Ventures Inc.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F5F6F3;
+    --surface:#FFFFFF;
+    --ink:#152622;
+    --ink-soft:#4C5C57;
+    --navy:#0F3D3E;
+    --accent:#1F9E8E;
+    --accent-deep:#0F3D3E;
+    --accent-soft:#DEEFEA;
+    --line:#E1E5E0;
+    --warn-bg:#FBF3E7;
+    --warn-line:#E9CFA0;
+    --radius:10px;
+    --maxw:760px;
+    --sidebar-w:270px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Fraunces', Georgia, serif;
+    color:var(--navy);
+    margin:0 0 .4em 0;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+  a{color:var(--accent-deep);}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    font-weight:600;
+    display:inline-block;
+    margin-bottom:8px;
+  }
+
+  /* ---------- Layout shell ---------- */
+  .shell{display:flex; min-height:100vh;}
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--line);
+    padding:28px 20px 40px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  .brand{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--navy);
+    line-height:1.3;
+    margin-bottom:2px;
+  }
+  .brand-sub{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:26px;
+    display:block;
+  }
+  nav.toc{font-size:14px;}
+  nav.toc ul{list-style:none; margin:0 0 18px 0; padding:0;}
+  nav.toc .toc-group-label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#8B978F;
+    margin:18px 0 6px 0;
+  }
+  nav.toc li a{
+    display:block;
+    padding:5px 8px;
+    margin:1px 0;
+    border-radius:6px;
+    color:var(--ink-soft);
+    text-decoration:none;
+    border-left:2px solid transparent;
+  }
+  nav.toc li a.channel{padding-left:20px; font-size:13px;}
+  nav.toc li a:hover{background:var(--accent-soft); color:var(--accent-deep);}
+  nav.toc li a.active{
+    background:var(--accent-soft);
+    color:var(--accent-deep);
+    border-left:2px solid var(--accent);
+    font-weight:600;
+  }
+
+  .menu-toggle{display:none;}
+
+  main{
+    flex:1;
+    min-width:0;
+    padding:56px 32px 100px;
+  }
+  .content{max-width:var(--maxw); margin:0 auto;}
+
+  /* ---------- Hero ---------- */
+  .hero{margin-bottom:20px;}
+  .hero h1{font-size:38px; line-height:1.1;}
+  .hero p.lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:60ch;
+    margin:10px 0 0 0;
+  }
+  .cell-motif{margin:28px 0 8px 0;}
+  .cell-motif svg{display:block;}
+
+  /* ---------- Callout boxes ---------- */
+  .callout{
+    border-radius:var(--radius);
+    padding:18px 20px;
+    margin:18px 0;
+    font-size:14.5px;
+  }
+  .callout.how{background:var(--accent-soft); border:1px solid #BFE1D9;}
+  .callout.compliance{background:var(--warn-bg); border:1px solid var(--warn-line);}
+  .callout h4{font-size:13px; text-transform:uppercase; letter-spacing:.08em; font-family:'IBM Plex Mono',monospace; color:inherit; margin-bottom:8px;}
+  .callout.how h4{color:var(--accent-deep);}
+  .callout.compliance h4{color:#8A5A17;}
+  .callout p{margin:0 0 8px 0;}
+  .callout p:last-child{margin-bottom:0;}
+  code.tag{
+    font-family:'IBM Plex Mono', monospace;
+    background:rgba(0,0,0,.06);
+    padding:1px 6px;
+    border-radius:4px;
+    font-size:13px;
+  }
+
+  /* ---------- Section / touchpoint ---------- */
+  section.touchpoint{
+    padding-top:64px;
+    margin-top:8px;
+    border-top:1px solid var(--line);
+  }
+  section.touchpoint:first-of-type{border-top:none;}
+  .tp-goal{
+    font-size:15px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:6px 0 34px 0;
+    max-width:58ch;
+  }
+  .tp-goal strong{color:var(--navy); font-style:normal;}
+
+  h3.channel-title{
+    font-size:15px;
+    font-family:'IBM Plex Mono', monospace;
+    text-transform:uppercase;
+    letter-spacing:.1em;
+    color:var(--navy);
+    margin:40px 0 16px 0;
+    padding-bottom:8px;
+    border-bottom:2px solid var(--navy);
+    display:inline-block;
+  }
+
+  /* ---------- Variant card ---------- */
+  .variant{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px 22px 18px;
+    margin-bottom:18px;
+  }
+  .variant-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:10px;
+  }
+  .variant-name{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:17px;
+    color:var(--navy);
+    margin:0;
+  }
+  .variant-usecase{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    display:block;
+    font-weight:400;
+    font-family:'IBM Plex Sans',sans-serif;
+    margin-top:2px;
+  }
+  .copy-btn{
+    flex-shrink:0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    background:var(--accent-soft);
+    color:var(--accent-deep);
+    border:1px solid #BFE1D9;
+    border-radius:6px;
+    padding:7px 12px;
+    cursor:pointer;
+    transition:background .15s ease;
+    white-space:nowrap;
+  }
+  .copy-btn:hover{background:#CBE7E0;}
+  .copy-btn.copied{background:var(--navy); color:#fff; border-color:var(--navy);}
+
+  .spiel-body p{margin:0 0 10px 0; font-size:15px;}
+  .spiel-body p:last-child{margin-bottom:0;}
+  .spiel-body .subject{
+    font-style:italic;
+    font-size:14px;
+    color:var(--ink-soft);
+    border-bottom:1px dashed var(--line);
+    padding-bottom:8px;
+    margin-bottom:12px;
+  }
+  .spiel-body .subject strong{font-style:normal; color:var(--ink);}
+  .spiel-body .label{font-weight:600; color:var(--navy);}
+  .spiel-body ul{margin:0 0 10px 0; padding-left:20px;}
+  .spiel-body li{margin-bottom:4px; font-size:15px;}
+  .placeholder{
+    background:#FFF4E0;
+    color:#7A5300;
+    padding:0 3px;
+    border-radius:3px;
+    font-size:.94em;
+  }
+
+  /* ---------- Appendix ---------- */
+  .obj-item{
+    border-left:3px solid var(--accent);
+    padding:4px 0 4px 14px;
+    margin-bottom:14px;
+  }
+  .obj-q{font-weight:600; color:var(--navy); margin:0 0 3px 0; font-size:15px;}
+  .obj-a{margin:0; font-size:14.5px; color:var(--ink-soft);}
+
+  .dodont{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:10px;
+  }
+  .dodont .col{
+    border-radius:var(--radius);
+    padding:16px 18px;
+    font-size:14px;
+  }
+  .dodont .do{background:var(--accent-soft); border:1px solid #BFE1D9;}
+  .dodont .dont{background:#FBEAEA; border:1px solid #EFC6C6;}
+  .dodont h4{font-family:'IBM Plex Mono', monospace; font-size:12px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:8px;}
+  .dodont .do h4{color:var(--accent-deep);}
+  .dodont .dont h4{color:#A33A3A;}
+  .dodont ul{margin:0; padding-left:18px;}
+  .dodont li{margin-bottom:8px;}
+  .dodont li:last-child{margin-bottom:0;}
+
+  footer.playbook-footer{
+    max-width:var(--maxw);
+    margin:60px auto 0;
+    padding-top:20px;
+    border-top:1px solid var(--line);
+    font-size:12.5px;
+    color:#8B978F;
+    text-align:center;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px){
+    .sidebar{
+      position:fixed;
+      z-index:40;
+      left:0; top:0;
+      height:100%;
+      transform:translateX(-100%);
+      transition:transform .2s ease;
+      box-shadow:8px 0 24px rgba(0,0,0,.12);
+    }
+    .sidebar.open{transform:translateX(0);}
+    .menu-toggle{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      position:fixed;
+      top:16px; left:16px;
+      z-index:50;
+      background:var(--navy);
+      color:#fff;
+      border:none;
+      border-radius:8px;
+      padding:10px 14px;
+      font-family:'IBM Plex Mono', monospace;
+      font-size:12px;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      cursor:pointer;
+    }
+    .overlay{
+      display:none;
+      position:fixed; inset:0;
+      background:rgba(15,61,62,.35);
+      z-index:35;
+    }
+    .overlay.show{display:block;}
+    main{padding:90px 18px 80px;}
+    .hero h1{font-size:30px;}
+    .dodont{grid-template-columns:1fr;}
+    .variant-head{flex-direction:column;}
+  }
+  @media print{
+    .sidebar, .menu-toggle, .copy-btn{display:none !important;}
+    main{padding:0;}
+    body{background:#fff;}
+  }
+</style>
+</head>
+<body>
+
+<button class="menu-toggle" id="menuToggle">☰ Menu</button>
+<div class="overlay" id="overlay"></div>
+
+<div class="shell">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">Sales Spiels Playbook</div>
+    <span class="brand-sub">Regenesys Ventures Inc.</span>
+    <nav class="toc">
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#compliance">Compliance Reminder</a></li>
+      </ul>
+      <div class="toc-group-label">Touchpoint 1</div>
+      <ul>
+        <li><a href="#tp1">Introduction &amp; Overview</a></li>
+        <li><a href="#tp1-email" class="channel">Email</a></li>
+        <li><a href="#tp1-sms" class="channel">SMS / Viber / WhatsApp</a></li>
+        <li><a href="#tp1-call" class="channel">Cold Call</a></li>
+      </ul>
+      <div class="toc-group-label">Touchpoint 2</div>
+      <ul>
+        <li><a href="#tp2">Schedule Follow-Up</a></li>
+        <li><a href="#tp2-email" class="channel">Email</a></li>
+        <li><a href="#tp2-sms" class="channel">SMS / Viber / WhatsApp</a></li>
+        <li><a href="#tp2-call" class="channel">Follow-Up Call</a></li>
+      </ul>
+      <div class="toc-group-label">Touchpoint 3</div>
+      <ul>
+        <li><a href="#tp3">After Presentation</a></li>
+        <li><a href="#tp3-email" class="channel">Email</a></li>
+        <li><a href="#tp3-sms" class="channel">SMS / Viber / WhatsApp</a></li>
+        <li><a href="#tp3-call" class="channel">Follow-Up Call</a></li>
+      </ul>
+      <div class="toc-group-label">Reference</div>
+      <ul>
+        <li><a href="#appendix">Objections &amp; Compliance</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="content">
+
+      <div class="hero" id="overview">
+        <span class="eyebrow">Internal Sales Enablement</span>
+        <h1>Sales Spiels Playbook</h1>
+        <p class="lede">Touchpoint scripts for Email, SMS/Viber/WhatsApp &amp; phone outreach — Mesenchymal Stem Cell Allograft, Exosomes &amp; Secretomes.</p>
+      </div>
+
+      <div class="cell-motif" aria-hidden="true">
+        <svg width="100%" height="34" viewBox="0 0 700 34" preserveAspectRatio="xMinYMid meet">
+          <line x1="0" y1="17" x2="700" y2="17" stroke="#E1E5E0" stroke-width="1"/>
+          <circle cx="14" cy="17" r="6" fill="#DEEFEA" stroke="#1F9E8E" stroke-width="1.4"/>
+          <circle cx="34" cy="17" r="3.5" fill="#1F9E8E"/>
+          <circle cx="52" cy="17" r="4.5" fill="#DEEFEA" stroke="#1F9E8E" stroke-width="1.2"/>
+          <circle cx="70" cy="17" r="2.5" fill="#0F3D3E"/>
+        </svg>
+      </div>
+
+      <div class="callout how">
+        <h4>How to use this playbook</h4>
+        <p>Each touchpoint offers three spiel variants per channel, tailored to different lead types, interest levels, or objections. Pick the version that best matches your read of the prospect, or blend elements from more than one. Tap <strong>Copy</strong> on any card to grab that spiel's text.</p>
+        <p>Replace every <code class="tag">[bracketed placeholder]</code> before sending, and swap in your real link everywhere you see <code class="tag">[Insert Intro Video Link]</code>.</p>
+      </div>
+
+      <div class="callout compliance" id="compliance">
+        <h4>Compliance reminder</h4>
+        <p>Mesenchymal Stem Cell Allograft, Exosomes, and Secretomes are Human Cell and Tissue Products (HCT/Ps) regulated under Section 361 of the U.S. Public Health Service Act — they are <strong>not FDA-approved drugs</strong>. Never describe them as "FDA-approved," a "cure," or as having "guaranteed results." Position them as advanced regenerative biologics, backed by strict U.S. sourcing, screening, and processing standards. Full guidance in the <a href="#appendix">appendix</a>.</p>
+      </div>
+
+      <!-- ================= TOUCHPOINT 1 ================= -->
+      <section class="touchpoint" id="tp1">
+        <span class="eyebrow">Touchpoint 1</span>
+        <h2>Company Introduction &amp; Product Overview</h2>
+        <p class="tp-goal"><strong>Goal:</strong> Introduce Regenesys Ventures Inc., generate interest in our biologic portfolio, and secure a product presentation (in-person or online).</p>
+
+        <h3 class="channel-title" id="tp1-email">A. Email</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 1 — The Science-First
+                <span class="variant-usecase">Best for regenerative medicine, orthopedic, or evidence-driven physicians</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> Advanced U.S.-Sourced Biologics Now Available in the Philippines</p>
+            <p>Dear Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>I'm <span class="placeholder">Your Name</span> from Regenesys Ventures Inc., the Philippine partner bringing next-generation regenerative biologics to local healthcare professionals.</p>
+            <p>We supply three U.S.-manufactured, CLIA-certified biologic products for cellular and tissue-support applications:</p>
+            <ul>
+              <li>Mesenchymal Stem Cell Allograft — a minimally processed extracellular matrix allograft that preserves regenerative potential</li>
+              <li>Exosomes — concentrated to support cellular communication and tissue repair</li>
+              <li>Secretomes — rich in growth factors and structural proteins</li>
+            </ul>
+            <p>All are sourced from healthy, screened donors under strict U.S. quality systems, and classified as Human Cell and Tissue Products (HCT/Ps).</p>
+            <p>Here's a short video overview of who we are and what we offer: <span class="placeholder">Insert Intro Video Link</span></p>
+            <p>Would you be open to a 20-minute presentation — in person or online — so we can walk your team through the science, sourcing, and clinical applications? I'm happy to work around your schedule.</p>
+            <p>Best regards,<br><span class="placeholder">Your Name</span><br><span class="placeholder">Contact Number</span> | <span class="placeholder">Email</span> | regenesys.ph</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 2 — The Practice Growth
+                <span class="variant-usecase">Best for clinic owners/decision-makers weighing new revenue lines</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> A New Regenerative Service Line for <span class="placeholder">Clinic Name</span></p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span> / <span class="placeholder">Name</span>,</p>
+            <p>Patient demand for regenerative and cellular therapies is growing fast in the Philippines — and clinics that offer it early are seeing strong differentiation and patient retention.</p>
+            <p>I'm <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. We supply U.S.-sourced biologics — Mesenchymal Stem Cell Allograft, Exosomes, and Secretomes — that clinics like yours can incorporate into existing aesthetic, wellness, or regenerative treatment offerings.</p>
+            <p>Take a quick look at who we are here: <span class="placeholder">Insert Intro Video Link</span></p>
+            <p>I'd love to show you how the products work, how sourcing and compliance are handled, and how partner clinics are positioning these services. Do you have 20-30 minutes this week or next for a short presentation, online or in person?</p>
+            <p>Looking forward to connecting,<br><span class="placeholder">Your Name</span><br><span class="placeholder">Contact Number</span> | <span class="placeholder">Email</span> | regenesys.ph</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — The Quick &amp; Curious
+                <span class="variant-usecase">Best for busy physicians / cold outreach, low-commitment ask</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> 90 seconds on regenerative biologics from the U.S.</p>
+            <p>Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>Quick intro — I'm with Regenesys Ventures Inc. We bring U.S.-manufactured biologic products (Mesenchymal Stem Cell Allograft, Exosomes, Secretomes) to healthcare providers in the Philippines.</p>
+            <p>90-second video here if you're curious: <span class="placeholder">Insert Intro Video Link</span></p>
+            <p>If it's relevant to your practice, I'd like to set up a short presentation — no pressure, just information. Would you have time this week?</p>
+            <p><span class="placeholder">Your Name</span><br>Regenesys Ventures Inc. | regenesys.ph</p>
+          </div>
+        </div>
+
+        <h3 class="channel-title" id="tp1-sms">B. SMS / Viber / WhatsApp</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 1 — Direct Value</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, this is <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. We supply U.S.-sourced regenerative biologics (Stem Cell Allograft, Exosomes, Secretomes) to PH clinics. Quick video here: <span class="placeholder">Insert Intro Video Link</span>. Open to a short presentation this week?</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 2 — Curiosity Teaser</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>! Have you looked into regenerative biologics for your practice yet? We're Regenesys Ventures Inc. — U.S.-manufactured stem cell, exosome &amp; secretome products now available in the PH. 2-min video: <span class="placeholder">Insert Intro Video Link</span>. Can I share more?</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — Referral / Warm Opener
+                <span class="variant-usecase">Use if referred by a colleague or met at an event</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, <span class="placeholder">Referrer Name</span> suggested I reach out. I'm <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. — we work with clinics on regenerative biologics (stem cell allograft, exosomes, secretomes). Short intro here: <span class="placeholder">Insert Intro Video Link</span>. Would a quick call work this week?</p>
+          </div>
+        </div>
+
+        <h3 class="channel-title" id="tp1-call">C. Cold Call</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 1 — Direct Value Approach</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Good [morning/afternoon], this is <span class="placeholder">Your Name</span> calling from Regenesys Ventures Inc. — may I speak with Dr. <span class="placeholder">Last Name</span>, or whoever handles new treatment/product introductions for the clinic?"</p>
+            <p><span class="label">If gatekeeper:</span> "I understand — I'm reaching out because we supply U.S.-sourced regenerative biologic products, and I'd like just 30 seconds to see if it's relevant to Dr. <span class="placeholder">Last Name</span>'s practice. Would that be alright?"</p>
+            <p><span class="label">Value prop:</span> "We're a Philippine company bringing in three U.S.-manufactured biologic products — Mesenchymal Stem Cell Allograft, Exosomes, and Secretomes — sourced from screened donors and processed in a CLIA-certified facility. A number of clinics are using these to expand their regenerative and aesthetic offerings."</p>
+            <p><span class="label">CTA:</span> "I'd like to send over a short video and set up a brief presentation, in person or online, so your team can see the science and how it fits your practice. Would [Day] or [Day] work better for a 20-minute session?"</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 2 — Curiosity / Question-Led Approach</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi, this is <span class="placeholder">Your Name</span> from Regenesys Ventures. Quick question — has Dr. <span class="placeholder">Last Name</span>'s clinic looked into offering regenerative or cellular therapies, like stem cell or exosome treatments?" [Pause for response]</p>
+            <p><span class="label">Follow-up:</span> "That's exactly why I'm calling. We supply U.S.-sourced biologics — stem cell allograft, exosomes, and secretomes — to clinics here in the Philippines, and I think it could be a strong fit."</p>
+            <p><span class="label">CTA:</span> "Would it be alright if I set up a short presentation so your team can see exactly what we offer and how it works? I can do it in person or online, whichever is easier."</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — Referral / Social Proof Approach
+                <span class="variant-usecase">Use when there's a known referral, association, or event connection</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Good [morning/afternoon], this is <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. <span class="placeholder">Referrer/Association Name</span> suggested I get in touch with Dr. <span class="placeholder">Last Name</span> about our regenerative biologic products."</p>
+            <p><span class="label">Value prop:</span> "We work with clinics offering stem cell allograft, exosome, and secretome treatments — all U.S.-manufactured and sourced under strict screening standards. Several clinics in [Area/Specialty] are already incorporating these into their services."</p>
+            <p><span class="label">CTA:</span> "I'd love to walk Dr. <span class="placeholder">Last Name</span> through it in a short presentation — would you have 20-30 minutes this week, either in person or online?"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TOUCHPOINT 2 ================= -->
+      <section class="touchpoint" id="tp2">
+        <span class="eyebrow">Touchpoint 2</span>
+        <h2>Follow-Up to Schedule a Presentation</h2>
+        <p class="tp-goal"><strong>Goal:</strong> Re-engage leads who were already contacted but haven't booked yet, and convert them into a confirmed presentation slot.</p>
+
+        <h3 class="channel-title" id="tp2-email">A. Email</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 1 — Warm / Engaged Lead
+                <span class="variant-usecase">Opened your email, replied, or asked questions</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> Following Up — <span class="placeholder">Clinic Name</span> x Regenesys</p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>Thanks for your interest in Regenesys Ventures Inc.! I wanted to follow up on our biologic line — Mesenchymal Stem Cell Allograft, Exosomes, and Secretomes — and get a presentation scheduled for your team.</p>
+            <p>I have openings on [Day 1] and [Day 2] — would either work, in person or online? It only takes 20-30 minutes, and I'll walk through the science, sourcing, pricing, and how partner clinics are using these.</p>
+            <p>Let me know what's convenient.</p>
+            <p>Best,<br><span class="placeholder">Your Name</span></p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 2 — Neutral / No-Response Lead
+                <span class="variant-usecase">Silent since first touch</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> Still Worth 20 Minutes of Your Time?</p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>Following up on my earlier note about Regenesys Ventures Inc. and our U.S.-sourced biologic products (stem cell allograft, exosomes, secretomes) — I know schedules get busy.</p>
+            <p>If it's still of interest, I'd love to set up a short presentation, no obligation, just to share what we offer and answer any questions. If now isn't the right time, happy to circle back later — just let me know.</p>
+            <p><span class="placeholder">Your Name</span></p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — Objection / Hesitant Lead
+                <span class="variant-usecase">Said busy, unsure of value, or non-committal</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> A Shorter Option, If That Helps</p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>Totally understand if timing hasn't worked out yet. Instead of a full presentation, I can send over a short video so you can review at your own pace: <span class="placeholder">Insert Intro Video Link</span></p>
+            <p>If it looks relevant to your practice afterward, we can set up a quick 15-minute call to go deeper — no pressure either way.</p>
+            <p><span class="placeholder">Your Name</span></p>
+          </div>
+        </div>
+
+        <h3 class="channel-title" id="tp2-sms">B. SMS / Viber / WhatsApp</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 1 — Warm / Engaged Lead</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, following up on Regenesys Ventures Inc. — would [Day] or [Day] work for that 20-min presentation on our stem cell/exosome/secretome line? In person or online, your call!</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 2 — Neutral / No-Response Lead</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, just checking in — still open to a quick look at our regenerative biologics? No pressure, happy to send more info first if that's easier.</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 3 — Objection / Hesitant Lead</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, no worries if timing's tight! Here's a short video instead: <span class="placeholder">Insert Intro Video Link</span>. Let me know if a quick 15-min call makes sense after you've had a look.</p>
+          </div>
+        </div>
+
+        <h3 class="channel-title" id="tp2-call">C. Follow-Up Call</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 1 — Warm / Engaged Lead</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi Dr. <span class="placeholder">Last Name</span>, this is <span class="placeholder">Your Name</span> from Regenesys Ventures Inc., following up on the biologics info I sent over."</p>
+            <p><span class="label">Body:</span> "I wanted to check if you had a chance to look at it, and see if we could get a presentation on the calendar — I can walk your team through the products, sourcing, and pricing in about 20-30 minutes."</p>
+            <p><span class="label">CTA:</span> "Would [Day] or [Day] work better, and would you prefer in-person or online?"</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 2 — Neutral / No-Response Lead</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi Dr. <span class="placeholder">Last Name</span>, this is <span class="placeholder">Your Name</span> from Regenesys Ventures — I reached out a little while back about our regenerative biologic line and wanted to follow up."</p>
+            <p><span class="label">Body:</span> "I know things get busy — I just wanted to see if it's still worth a short 20-minute presentation, no obligation, so you can see if it's a fit for your practice."</p>
+            <p><span class="label">CTA:</span> "Would this week or next work better for you?"</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — Objection / Hesitant Lead
+                <span class="variant-usecase">Price or time concern</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi Dr. <span class="placeholder">Last Name</span>, <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. again — totally understand if the timing's been off."</p>
+            <p><span class="label">Body:</span> "Instead of taking up 30 minutes right away, I can send a short video and one-pager so you can review when you have a few minutes: <span class="placeholder">Insert Intro Video Link</span>. If it looks like a fit, we can do a quick 15-minute call after."</p>
+            <p><span class="label">CTA:</span> "Would that work better for you?"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TOUCHPOINT 3 ================= -->
+      <section class="touchpoint" id="tp3">
+        <span class="eyebrow">Touchpoint 3</span>
+        <h2>Follow-Up After the Presentation</h2>
+        <p class="tp-goal"><strong>Goal:</strong> Move presented leads toward a decision — trial order, distributor/account setup, or next clinical step.</p>
+
+        <h3 class="channel-title" id="tp3-email">A. Email</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 1 — Ready to Move Forward
+                <span class="variant-usecase">Asked about pricing/next steps during the presentation</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> Next Steps for <span class="placeholder">Clinic Name</span> x Regenesys</p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>Great speaking with you and your team! Since you were asking about [pricing / order minimums / onboarding], here's a quick summary of next steps:</p>
+            <ul>
+              <li>[Step 1 — e.g., sample/trial order]</li>
+              <li>[Step 2 — e.g., account setup]</li>
+              <li>[Step 3 — e.g., first shipment/training]</li>
+            </ul>
+            <p>Let me know if you'd like to proceed, or if you have any remaining questions before we finalize.</p>
+            <p>Best,<br><span class="placeholder">Your Name</span></p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 2 — Still Deciding / Comparing
+                <span class="variant-usecase">Needs more info or to consult partners</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> Anything I Can Clarify?</p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>Thanks again for the time during our presentation. I know you mentioned wanting to [discuss with your partners / compare options] — happy to send additional info, case studies, or pricing details to help with that conversation.</p>
+            <p>Is there anything specific I can prepare or clarify in the meantime?</p>
+            <p><span class="placeholder">Your Name</span></p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — Objection-Based
+                <span class="variant-usecase">Price, timing, or hesitation</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p class="subject"><strong>Subject:</strong> Let's Find What Works for <span class="placeholder">Clinic Name</span></p>
+            <p>Hi Dr. <span class="placeholder">Last Name</span>,</p>
+            <p>I understand [price / timing] was a concern after our presentation. I wanted to check back and see if there's a starting point that makes more sense for your practice, such as [trial-size order / phased rollout / adjusted terms].</p>
+            <p>Would it help to hop on a quick call to talk through options?</p>
+            <p><span class="placeholder">Your Name</span></p>
+          </div>
+        </div>
+
+        <h3 class="channel-title" id="tp3-sms">B. SMS / Viber / WhatsApp</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 1 — Ready to Move Forward</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, thanks for having us! Sending over next steps for onboarding with Regenesys Ventures Inc. shortly — let me know if you'd like to start with [trial order] this week.</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 2 — Still Deciding / Comparing</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, thanks again for the time! Let me know if you need any additional info or materials while you and your team decide — happy to help.</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 3 — Objection-Based</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p>Hi Dr. <span class="placeholder">Last Name</span>, understand [price/timing] is a factor. We may have some flexible options — want to hop on a quick call to see what fits best?</p>
+          </div>
+        </div>
+
+        <h3 class="channel-title" id="tp3-call">C. Follow-Up Call</h3>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 1 — Ready to Move Forward</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi Dr. <span class="placeholder">Last Name</span>, this is <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. — following up after our presentation."</p>
+            <p><span class="label">Body:</span> "You mentioned interest in [specific product/application] — I wanted to walk you through the next steps to get started, whether that's a trial order or setting up your account."</p>
+            <p><span class="label">CTA:</span> "Would you like to move forward this week, or do you have any last questions before we do?"</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <p class="variant-name">Variant 2 — Still Deciding / Comparing</p>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi Dr. <span class="placeholder">Last Name</span>, <span class="placeholder">Your Name</span> from Regenesys Ventures Inc. checking in after the presentation."</p>
+            <p><span class="label">Body:</span> "I know you wanted to [discuss with your team / compare a few options] — I just wanted to see how that's going and if there's anything else I can provide to help the decision."</p>
+            <p><span class="label">CTA:</span> "Is there a good time to check back in, or anything specific I can send over now?"</p>
+          </div>
+        </div>
+
+        <div class="variant">
+          <div class="variant-head">
+            <div>
+              <p class="variant-name">Variant 3 — Objection-Based
+                <span class="variant-usecase">Price / timing</span>
+              </p>
+            </div>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <div class="spiel-body">
+            <p><span class="label">Opener:</span> "Hi Dr. <span class="placeholder">Last Name</span>, this is <span class="placeholder">Your Name</span> from Regenesys Ventures Inc."</p>
+            <p><span class="label">Body:</span> "I understand [price/timing] might be a hurdle right now — I wanted to see if there's a smaller starting point, like a trial-size order, that could work better while you evaluate."</p>
+            <p><span class="label">CTA:</span> "Would that be worth discussing further?"</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= APPENDIX ================= -->
+      <section class="touchpoint" id="appendix">
+        <span class="eyebrow">Reference</span>
+        <h2>Objections &amp; Compliance</h2>
+
+        <h3 class="channel-title">Quick Objection-Handling Reference</h3>
+        <div class="obj-item">
+          <p class="obj-q">"We already have a supplier."</p>
+          <p class="obj-a">Ask what they value most (sourcing, price, exosome concentration, support) and offer a side-by-side comparison or trial order.</p>
+        </div>
+        <div class="obj-item">
+          <p class="obj-q">"Is this FDA-approved?"</p>
+          <p class="obj-a">Clarify: these are HCT/Ps regulated under Section 361 of the U.S. Public Health Service Act, not FDA-approved drugs. Emphasize CLIA-certified processing and donor screening standards. Avoid guaranteeing outcomes.</p>
+        </div>
+        <div class="obj-item">
+          <p class="obj-q">"It's too expensive."</p>
+          <p class="obj-a">Reframe around per-treatment value/margin for the clinic, or offer a trial-size order to lower the initial commitment.</p>
+        </div>
+        <div class="obj-item">
+          <p class="obj-q">"I need to check with my partner/associate."</p>
+          <p class="obj-a">Offer to present to the full group directly, or send materials both can review together.</p>
+        </div>
+        <div class="obj-item">
+          <p class="obj-q">"Not the right time."</p>
+          <p class="obj-a">Send the intro video/one-pager now and set a specific follow-up date rather than leaving it open-ended.</p>
+        </div>
+
+        <h3 class="channel-title" style="margin-top:44px;">Do's and Don'ts for Compliance</h3>
+        <div class="dodont">
+          <div class="col do">
+            <h4>Do</h4>
+            <ul>
+              <li>Describe products as "regenerative biologic support" or "cellular and tissue support products," backed by science and strict sourcing standards.</li>
+              <li>Mention CLIA-certified processing and donor screening as trust signals.</li>
+            </ul>
+          </div>
+          <div class="col dont">
+            <h4>Don't</h4>
+            <ul>
+              <li>Promise cures, guaranteed outcomes, or specific clinical results.</li>
+              <li>Refer to the products as "FDA-approved" — they are HCT/Ps under Section 361 PHSA, not approved drugs.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <footer class="playbook-footer">
+        Regenesys Ventures Inc. — Internal Sales Enablement — regenesys.ph
+      </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  // Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const menuToggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('overlay');
+  function closeMenu(){ sidebar.classList.remove('open'); overlay.classList.remove('show'); }
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('show');
+  });
+  overlay.addEventListener('click', closeMenu);
+  sidebar.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  // Copy-to-clipboard
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = btn.closest('.variant').querySelector('.spiel-body');
+      const text = body.innerText.trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = original; btn.classList.remove('copied'); }, 1600);
+      });
+    });
+  });
+
+  // Active section highlighting in sidebar
+  const navLinks = Array.from(document.querySelectorAll('nav.toc a'));
+  const targets = navLinks
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = '#' + entry.target.id;
+      const link = navLinks.find(a => a.getAttribute('href') === id);
+      if (!link) return;
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+  targets.forEach(t => observer.observe(t));
+</script>
+
+</body>
+</html>
